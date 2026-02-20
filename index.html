@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PRO GENESIS | NEON MANIFEST</title>
+    <meta name="description" content="Create stunning neon particle art with your name. 20 insane visual modes.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="stage">
+        <canvas id="artCanvas"></canvas>
+    </div>
+
+    <!-- Photo Capture Only -->
+    <div class="pro-tools">
+        <button class="tool-btn" onclick="takeSnapshot()" title="Save as Wallpaper">
+            <i class="fas fa-camera"></i>
+        </button>
+        <!-- Photo Capture Only -->
+        <div class="pro-tools">
+            <button class="tool-btn" onclick="takeSnapshot()" title="Save as Wallpaper">
+                <i class="fas fa-camera"></i>
+            </button>
+            <button class="tool-btn" id="recordBtn" onclick="toggleRecording()" title="Record Video">
+                <i class="fas fa-video"></i>
+            </button>
+        </div>
+
+        <!-- MAIN NAME DISPLAY -->
+        <div id="nameDisplay" class="name-display"></div>
+        <div class="name-input-container">
+            <input type="text" id="nameInput" placeholder="TYPE YOUR NAME..." autocomplete="off">
+            <button class="name-save-btn" onclick="takeSnapshot()" title="Save">
+                <i class="fas fa-camera"></i>
+            </button>
+        </div>
+
+        <div class="selector">
+            <div class="dot active" onclick="setMode(0)"></div>
+            <div class="dot" onclick="setMode(1)"></div>
+            <div class="dot" onclick="setMode(2)"></div>
+            <div class="dot" onclick="setMode(3)"></div>
+            <div class="dot" onclick="setMode(4)"></div>
+            <div class="dot" onclick="setMode(5)"></div>
+            <div class="dot" onclick="setMode(6)"></div>
+            <div class="dot" onclick="setMode(7)"></div>
+            <div class="dot" onclick="setMode(8)"></div>
+            <div class="dot" onclick="setMode(9)"></div>
+            <div class="dot" onclick="setMode(10)"></div>
+            <div class="dot" onclick="setMode(11)"></div>
+            <div class="dot" onclick="setMode(12)"></div>
+            <div class="dot" onclick="setMode(13)"></div>
+            <div class="dot" onclick="setMode(14)"></div>
+            <div class="dot" onclick="setMode(15)"></div>
+            <div class="dot" onclick="setMode(16)"></div>
+            <div class="dot" onclick="setMode(17)"></div>
+            <div class="dot" onclick="setMode(18)"></div>
+            <div class="dot" onclick="setMode(19)"></div>
+        </div>
+
+        <div class="ad-container">
+            <div class="ad-placeholder">PROMO SPACE</div>
+        </div>
+
+        <script src="script.js"></script>
+</body>
+
+</html>

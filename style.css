@@ -1,0 +1,441 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+    font-family: 'Orbitron', sans-serif;
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#stage {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#artCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* === INSANE NAME DISPLAY === */
+.name-display {
+    position: fixed;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 90;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    color: #fff;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+}
+
+.name-display.visible {
+    opacity: 1;
+}
+
+.name-display.fading {
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+/* Individual letter styling */
+.name-letter {
+    display: inline-block;
+    position: relative;
+    animation: letterGlitch 0.1s ease;
+    color: #00f2ff;
+    text-shadow:
+        0 0 10px #00f2ff,
+        0 0 20px #00f2ff,
+        0 0 40px #00f2ff,
+        0 0 80px #7000ff;
+}
+
+.name-letter.decoding {
+    color: #ff0077;
+    text-shadow:
+        0 0 10px #ff0077,
+        0 0 30px #ff0077,
+        0 0 60px #ff00ff;
+    animation: letterDecode 0.08s linear infinite;
+}
+
+.name-letter.decoded {
+    animation: letterReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes letterDecode {
+    0% {
+        transform: translateY(-2px) scaleY(1.1);
+        opacity: 0.8;
+    }
+
+    25% {
+        transform: translateY(1px) scaleX(1.05);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(-1px) skewX(5deg);
+        opacity: 0.7;
+    }
+
+    75% {
+        transform: translateY(2px) skewX(-3deg);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: translateY(0) scaleY(0.95);
+        opacity: 0.8;
+    }
+}
+
+@keyframes letterReveal {
+    0% {
+        color: #ff0077;
+        text-shadow: 0 0 30px #ff0077, 0 0 60px #ff00ff;
+        transform: scale(1.8) translateY(-10px);
+        opacity: 1;
+    }
+
+    30% {
+        color: #ffea00;
+        text-shadow: 0 0 40px #ffea00, 0 0 80px #ff8800;
+        transform: scale(1.3) translateY(5px);
+    }
+
+    60% {
+        color: #00ffaa;
+        text-shadow: 0 0 20px #00ffaa, 0 0 60px #00ff44;
+        transform: scale(1.05) translateY(-2px);
+    }
+
+    100% {
+        color: #00f2ff;
+        text-shadow:
+            0 0 10px #00f2ff,
+            0 0 20px #00f2ff,
+            0 0 40px #00f2ff,
+            0 0 80px #7000ff,
+            0 0 120px #7000ff;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes letterFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.name-letter.floating {
+    animation: letterFloat 2.5s ease-in-out infinite;
+}
+
+/* Stagger the float for each letter */
+.name-letter.floating:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.name-letter.floating:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.name-letter.floating:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.name-letter.floating:nth-child(4) {
+    animation-delay: 0.45s;
+}
+
+.name-letter.floating:nth-child(5) {
+    animation-delay: 0.6s;
+}
+
+.name-letter.floating:nth-child(6) {
+    animation-delay: 0.75s;
+}
+
+.name-letter.floating:nth-child(7) {
+    animation-delay: 0.9s;
+}
+
+.name-letter.floating:nth-child(8) {
+    animation-delay: 1.05s;
+}
+
+.name-letter.floating:nth-child(9) {
+    animation-delay: 1.2s;
+}
+
+.name-letter.floating:nth-child(10) {
+    animation-delay: 1.35s;
+}
+
+.name-letter.floating:nth-child(11) {
+    animation-delay: 1.5s;
+}
+
+.name-letter.floating:nth-child(12) {
+    animation-delay: 1.65s;
+}
+
+/* === Name Input Box === */
+.name-input-container {
+    position: fixed;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: min(350px, 85vw);
+    display: flex;
+    gap: 10px;
+}
+
+#nameInput {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid #00f2ff;
+    padding: 12px 20px;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-align: center;
+    border-radius: 8px;
+    outline: none;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    transition: 0.4s;
+    text-transform: uppercase;
+}
+
+#nameInput::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 2px;
+}
+
+#nameInput:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom-color: #ff0077;
+    box-shadow: 0 5px 20px rgba(255, 0, 119, 0.3);
+}
+
+.name-save-btn {
+    width: 50px;
+    height: 48px;
+    background: linear-gradient(135deg, #00ffaa, #00cc88);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.4);
+    transition: 0.3s;
+}
+
+.name-save-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(0, 255, 170, 0.6);
+}
+
+/* === Selector & Dots === */
+.selector {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    max-width: 92vw;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.selector::-webkit-scrollbar {
+    display: none;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.dot:hover {
+    border-color: #00f2ff;
+    box-shadow: 0 0 8px #00f2ff;
+    transform: scale(1.2);
+}
+
+.dot.active {
+    background: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 12px #fff, 0 0 24px rgba(255, 255, 255, 0.3);
+    transform: scale(1.4);
+}
+
+/* === Pro Tools (Camera Only) === */
+.pro-tools {
+    position: fixed;
+    top: 30px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tool-btn {
+    width: 46px;
+    height: 46px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 14px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tool-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* === Ad Container === */
+.ad-container {
+    position: fixed;
+    top: 30px;
+    left: 20px;
+    z-index: 100;
+}
+
+.ad-placeholder {
+    padding: 5px 15px;
+    border: 1px solid rgba(0, 255, 170, 0.2);
+    color: rgba(0, 255, 170, 0.6);
+    font-size: 0.55rem;
+    letter-spacing: 2px;
+    border-radius: 4px;
+    font-family: 'Orbitron', sans-serif;
+    backdrop-filter: blur(5px);
+}
+
+/* === Mobile Responsive === */
+@media (max-width: 768px) {
+    .name-display {
+        font-size: clamp(1.5rem, 8vw, 3rem);
+        letter-spacing: 5px;
+        top: 10%;
+    }
+
+    .name-input-container {
+        bottom: 100px;
+        width: 80vw;
+    }
+
+    #nameInput {
+        font-size: 0.65rem;
+        padding: 10px 14px;
+    }
+
+    .selector {
+        bottom: 30px;
+        gap: 6px;
+        padding: 8px 12px;
+    }
+
+    .dot {
+        width: 9px;
+        height: 9px;
+        min-width: 9px;
+    }
+
+    .pro-tools {
+        top: 20px;
+        right: 12px;
+    }
+
+    .tool-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.8rem;
+    }
+
+    .ad-container {
+        top: 20px;
+        left: 12px;
+    }
+
+    .ad-placeholder {
+        font-size: 0.45rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .name-display {
+        font-size: 1.2rem;
+        letter-spacing: 3px;
+    }
+
+    .selector {
+        gap: 5px;
+        padding: 6px 10px;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        min-width: 8px;
+    }
+}
